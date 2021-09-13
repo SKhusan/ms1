@@ -1,0 +1,17 @@
+<FindBugsFilter>
+  <Match>
+    <Bug pattern="CE_CLASS_ENVY"/>
+  </Match>
+  <Match>
+    <Bug pattern="EXS_EXCEPTION_SOFTENING_NO_CONSTRAINTS"/>
+  </Match>
+  <Match>
+    <Bug pattern="FCCD_FIND_CLASS_CIRCULAR_DEPENDENCY"/>
+  </Match>
+  <Match>
+    <Bug pattern="OCP_OVERLY_CONCRETE_PARAMETER"/>
+  </Match>
+  <Match>
+    <Bug pattern="SLF4J_FORMAT_SHOULD_BE_CONST"/>
+  </Match>
+</FindBugsFilter>

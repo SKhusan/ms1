@@ -1,0 +1,23 @@
+server:
+  port: 7070
+
+
+info:
+  app:
+    name: ${spring.application.name}
+    version: "@application.version@"
+    description: "@application.description@"
+spring:
+  application:
+    name: OpenCage integration
+  data:
+    mongodb:
+      host: ${MONGODB_HOST:localhostx}
+      database: opencauge
+      port: ${MONGODB_PORT:27010}
+
+
+external:
+  services:
+    opencage:
+      api_key: ${OPENCAGE_API_KEY:6bd842a1b5af4b40af060e7e2f7fe94c}

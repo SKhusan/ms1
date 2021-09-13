@@ -32,7 +32,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("io.javaslang:javaslang:2.0.2")
     implementation("org.apache.commons:commons-lang3")
     implementation("org.json:json:20190722")
@@ -55,7 +54,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.testcontainers:mongodb:${testContainersVersion}")
     testImplementation("org.testcontainers:junit-jupiter:${testContainersVersion}")
     testImplementation("org.testcontainers:testcontainers:${testContainersVersion}")
 }

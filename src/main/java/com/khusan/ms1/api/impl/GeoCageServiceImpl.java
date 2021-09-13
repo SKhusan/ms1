@@ -2,12 +2,8 @@ package com.khusan.ms1.api.impl;
 
 import com.byteowls.jopencage.JOpenCageGeocoder;
 import com.byteowls.jopencage.model.JOpenCageForwardRequest;
-import com.byteowls.jopencage.model.JOpenCageLatLng;
-import com.byteowls.jopencage.model.JOpenCageResponse;
 import com.khusan.ms1.api.GeoCageService;
-import com.khusan.ms1.api.HotelService;
 import com.khusan.ms1.api.config.OpenCageServiceConfig;
-import com.khusan.ms1.api.dto.Hotel;
 import com.khusan.ms1.api.dto.HotelDto;
 import java.util.Map;
 import java.util.Optional;
@@ -21,7 +17,6 @@ import org.springframework.stereotype.Service;
 public final class GeoCageServiceImpl implements GeoCageService {
 
   private final OpenCageServiceConfig serviceConfig;
-  private final HotelService hotelService;
 
   @Override
   public Optional<Map<String, String>> getGeoPosition(final String place, final String country) {
@@ -45,26 +40,7 @@ public final class GeoCageServiceImpl implements GeoCageService {
 
   @Override
   public Optional<Map<String, String>> getGeoPosition(final HotelDto place) {
-
-    var hOptional = hotelService.findHotel(place);
-    if (hOptional.isPresent()
-        && hOptional.get().getLatitude() != null
-        && hOptional.get().getLongtitude() != null) {
-      return Optional.of(
-          hotelDataToMap(hOptional.get().getLatitude(), hOptional.get().getLongtitude()));
-    } else {
-      var latLon = getGeoPosition(place.getAddress(), place.getCountry());
-      hotelService.putHotel(
-          latLon
-              .map(
-                  latLonMap -> {
-                    place.setLatitude(latLon.get().get("lat"));
-                    place.setLongtitude(latLon.get().get("lon"));
-                    return place;
-                  })
-              .get());
-      return latLon;
-    }
+      return getGeoPosition(place.getAddress(), place.getCountry());
   }
 
   private Map<String, String> hotelDataToMap(String latValue, String lonValue) {

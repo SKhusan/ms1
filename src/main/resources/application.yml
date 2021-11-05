@@ -10,6 +10,10 @@ info:
 spring:
   application:
     name: OpenCage integration
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOST:localhost}
+      port: ${MONGO_DB_PORT:27017}
 
 external:
   services:

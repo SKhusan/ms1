@@ -1,5 +1,7 @@
 package com.khusan.ms1.api.impl;
 
+import static com.khusan.ms1.api.utils.HotelDtoUtils.extractLatLonOptional;
+
 import com.byteowls.jopencage.JOpenCageGeocoder;
 import com.byteowls.jopencage.model.JOpenCageForwardRequest;
 import com.khusan.ms1.api.GeoCageService;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 public final class GeoCageServiceImpl implements GeoCageService {
 
   private final OpenCageServiceConfig serviceConfig;
+  private final HotelDataServiceImpl hotelDataService;
 
   @Override
   public Optional<Map<String, String>> getGeoPosition(final String place, final String country) {
@@ -38,9 +41,21 @@ public final class GeoCageServiceImpl implements GeoCageService {
     return Optional.empty();
   }
 
-  @Override
+  @Override //FixMe Should be added exceptional situation when record couldn't be saved on repo
   public Optional<Map<String, String>> getGeoPosition(final HotelDto place) {
-      return getGeoPosition(place.getAddress(), place.getCountry());
+    var hotelFromCache = hotelDataService.findHotelDto(place);
+    if (hotelFromCache.isPresent()) {
+      return extractLatLonOptional(place);
+    } else {
+      var result = getGeoPosition(place.getAddress(), place.getCountry());
+      if (result.isPresent()) {
+        var latLon = result.get();
+        place.setLatitude(latLon.get("lat"));
+        place.setLongtitude(latLon.get("lon"));
+        hotelDataService.saveHotelDto(place);
+      }
+      return result;
+    }
   }
 
   private Map<String, String> hotelDataToMap(String latValue, String lonValue) {

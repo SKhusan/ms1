@@ -7,7 +7,7 @@ ARG version=undefined
 LABEL version=${version}
 
 WORKDIR /
-COPY build/libs/ms1-$version.jar /category-ms.jar
+COPY build/libs/ms1-$version.jar /ms1.jar
 
 USER nobody
 
@@ -17,4 +17,4 @@ EXPOSE 7070
 EXPOSE 8080
 EXPOSE 8081
 
-ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -jar category-ms.jar"]
+ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -jar ms1.jar"]

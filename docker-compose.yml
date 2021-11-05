@@ -1,17 +1,25 @@
 version: '3'
 
 services:
-  category-service:
-    image: khusan/ms1:1.0.0
+  ms1-service:
+    image: khusan/ms1:1.0.12
     build:
       context: .
       args:
         version: ${API_VERSION}
     volumes:
-      - ./build/libs/ms1-${API_VERSION}.jar:/opt/demo/lib/category-ms.jar
+      - ./build/libs/ms1-${API_VERSION}.jar:/opt/demo/lib/ms1.jar
     ports:
       - "7070:7070"
       - "8081:8081"
     restart: "no"
     environment:
       - OPEN_CAGE_API_KEY=6bd842a1b5af4b40af060e7e2f7fe94c
+      - MONGO_DB_HOST=mongodb
+      - MONGO_DB_PORT=27017
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
